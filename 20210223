@@ -1,0 +1,6 @@
+-- 테이블에있는 총 CITY 항목 수와 테이블에있는 고유 한 CITY 항목 수 간의 차이를 찾으십시오. STATION 테이블은 다음과 같이 설명됩니다.
+
+SELECT count(CITY) - count(distinct CITY)
+FROM STATION
+
+
