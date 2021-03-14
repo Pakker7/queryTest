@@ -66,10 +66,56 @@ HOUR	COUNT
 22	0
 23	0
 
--- 코드를 입력하세요
-SELECT HOUR(DATETIME) as HOUR, COUNT(*) as COUNT, DATETIME ,
+  -- 코드를 입력하세요
+select distinct HOUR, SUM(COUNT) as COUNT from 
+(select 0 as HOUR, 0 COUNT union 
+select 1 as HOUR, 0 COUNT union 
+select 2 as HOUR, 0 COUNT union
+select 3 as HOUR, 0 COUNT union
+select 4 as HOUR, 0 COUNT union
+select 5 as HOUR, 0 COUNT union
+select 6 as HOUR, 0 COUNT union 
+select 7 as HOUR, 0 COUNT union 
+select 8 as HOUR, 0 COUNT union
+select 9 as HOUR, 0 COUNT union
+select 10 as HOUR, 0 COUNT union
+select 11 as HOUR, 0 COUNT union
+select 12 as HOUR, 0 COUNT union 
+select 13 as HOUR, 0 COUNT union 
+select 14 as HOUR, 0 COUNT union
+select 15 as HOUR, 0 COUNT union
+select 16 as HOUR, 0 COUNT union
+select 17 as HOUR, 0 COUNT union
+select 18 as HOUR, 0 COUNT union
+select 19 as HOUR, 0 COUNT union
+select 20 as HOUR, 0 COUNT union 
+select 21 as HOUR, 0 COUNT union 
+select 22 as HOUR, 0 COUNT union
+select 23 as HOUR, 0 COUNT union
+(SELECT HOUR(DATETIME) as HOUR, COUNT(*) as COUNT
 FROM ANIMAL_OUTS 
-GROUP BY HOUR(DATETIME)
-ORDER BY HOUR(DATETIME)
+GROUP BY HOUR
+ORDER BY HOUR)) as a
+GROUP BY HOUR
+order by HOUR
 
-푸는 중 (https://programmers.co.kr/learn/courses/30/lessons/59413)
+이렇게 했다가 반복되는 부분을 수정할 수 있을 것 같아서 수정하였다.
+
+SELECT HOUR, SUM(COUNT) as COUNT 
+FROM (WITH RECURSIVE cte AS (
+  SELECT 0 as HOUR, 0 as COUNT
+  UNION ALL
+  SELECT HOUR + 1, 0 as COUNT FROM cte WHERE HOUR < 23 )
+SELECT HOUR, COUNT FROM cte
+
+UNION 
+
+SELECT HOUR(DATETIME) as HOUR, COUNT(*) as COUNT
+FROM ANIMAL_OUTS 
+GROUP BY HOUR
+ORDER BY HOUR) AS a
+GROUP BY a.HOUR
+
+
+
+
