@@ -1,1 +1,77 @@
 https://www.hackerrank.com/domains/sql?filters%5Bdifficulty%5D%5B%5D=easy
+
+-- STATION 테이블에서 다음 두 값을 질의합니다. 
+-- LAT_N에있는 모든 값의 합계는 소수점 이하 두 자리까지 반올림됩니다.
+-- LONG_W에있는 모든 값의 합계를 소수점 이하 2 자리까지 반올림됩니다.
+
+select round(sum(LAT_N),2), round(sum(LONG_W),2)
+from STATION
+
+-- 값이 38.7880보다 크고 137.2345보다 작은 STATION의 북위도 합계 (LAT_N)를 쿼리합니다. 답을 소수점 이하 4 자리로 자릅니다.
+
+select truncate(sum(LAT_N),4)
+from STATION
+where LAT_N > 38.7880 and LAT_N < 137.2345
+
+-- STATION에서 137.2345보다 작은 북위도 (LAT_N)의 가장 큰 값을 쿼리합니다. 답을 소수점 이하 4 자리로 자릅니다.
+
+select max(truncate(LAT_N,4))
+from STATION
+where LAT_N < 137.2345
+
+-- 137.2345보다 작은 STATION에서 가장 큰 북위도 (LAT_N)에 대해 서부 경도 (LONG_W)를 쿼리합니다. 답을 소수점 4 자리로 반올림하십시오.
+
+select round(LONG_W,4)
+from STATION
+where max(LAT_N)
+
+-- 137.2345보다 작은 STATION에서 가장 큰 북위도 (LAT_N)에 대해 서부 경도 (LONG_W)를 쿼리합니다. 답을 소수점 4 자리로 반올림하십시오.
+
+select round(LONG_W,4)
+from STATION
+where LAT_N =(select max(LAT_N) from STATION where LAT_N < 137.2345)
+
+--STATION에서 38.7780보다 큰 가장 작은 북위도 (LAT_N)를 쿼리합니다. 답을 소수점 4 자리로 반올림하십시오.
+
+select min(round(LAT_N,4))
+from STATION
+where LAT_N > 38.7780
+
+-- STATION에서 가장 작은 북위도 (LAT_N)가 38.7780보다 큰 서부 경도 (LONG_W)를 쿼리합니다. 답을 소수점 4 자리로 반올림하십시오.
+
+select round(LONG_W,4)
+from STATION
+where LAT_N = (select min(LAT_N) from STATION where LAT_N > 38.7780)
+
+-- CITY 및 COUNTRY 테이블이 주어지면 CONTINENT가 'Asia'인 모든 도시의 인구 합계를 쿼리합니다. 
+-- 참고 : CITY.CountryCode 및 COUNTRY.Code는 키 열과 일치합니다.
+
+select sum(CITY.POPULATION)
+from CITY 
+join COUNTRY on CITY.CountryCode = COUNTRY.Code
+where COUNTRY.CONTINENT='Asia'
+
+--CITY 및 COUNTRY 테이블이 주어지면 CONTINENT가 'Africa'인 모든 도시의 이름을 쿼리하십시오. 참고 : CITY.CountryCode 및 COUNTRY.Code는 키 열과 일치합니다.
+
+select CITY.NAME
+from CITY 
+join COUNTRY on CITY.CountryCode = COUNTRY.Code
+where COUNTRY.CONTINENT='Africa'
+
+-- CITY 및 COUNTRY 테이블이 주어지면 모든 대륙의 이름 (COUNTRY.Continent)과 각각의 평균 도시 인구 (CITY.Population)를 가장 가까운 정수로 내림하여 쿼리합니다. 참고 : CITY.CountryCode 및 COUNTRY.Code는 키 열과 일치합니다.
+
+select COUNTRY.Continent, FLOOR(avg(CITY.Population))
+from CITY 
+join COUNTRY on CITY.CountryCode = COUNTRY.Code
+group by COUNTRY.Continent
+
+-- 직원의 총 수입을 salary X months로 정의하고 최대 총 수입을 Employee 테이블의 직원에 대한 최대 총 수입으로 정의합니다. 모든 직원의 최대 총 수입과 총 수입이 최대 인 총 직원 수를 찾는 쿼리를 작성합니다. 그런 다음이 값을 공백으로 구분 된 2 개의 정수로 인쇄합니다.
+
+select (salary*months) as earnings, count(employee_id)
+from Employee 
+group by 1                -------------------------> group by 1은 select의 첫번 째 인자라는 뜻, 몇번째 인자 인지 작성 할 수 있음!!!!!!!!!!!
+order by earnings desc limit 1
+
+
+
+
