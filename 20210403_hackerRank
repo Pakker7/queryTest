@@ -64,6 +64,18 @@ SELECT
     ), 4)
 FROM 
     STATION;
+    
+    
+-- Amber의 대기업은 방금 몇 개의 새로운 회사를 인수했습니다. 각 회사는 다음 계층을 따릅니다.
+-- 아래 테이블 스키마가 주어지면 company_code, 창립자 이름, 총 리드 관리자 수, 총 고위 관리자 수, 총 관리자 수 및 총 직원 수를 인쇄하는 쿼리를 작성하십시오. company_code 오름차순으로 출력을 정렬하십시오.
+-- 참고 : 테이블에 중복 레코드가 포함될 수 있습니다. company_code는 문자열이므로 정렬은 숫자가 아니어야합니다. 예를 들어 company_codes가 C_1, C_2 및 C_10 인 경우 오름차순 company_codes는 C_1, C_10 및 C_2가됩니다.
+-- 입력 형식 다음 테이블에는 회사 데이터가 포함되어 있습니다. 
+-- company : company_code는 회사의 코드이고 founder는 회사의 설립자입니다.
+-- Lead_Manager : lead_manager_code는 리드 매니저의 코드이고 company_code는 작업 회사의 코드입니다.
+-- Senior_Manager : senior_manager_code는 수석 관리자의 코드, lead_manager_code는 수석 관리자의 코드, company_code는 근무 회사의 코드입니다.
+-- manager: 관리자 : manager_code는 관리자의 코드, senior_manager_code는 선임 관리자의 코드, lead_manager_code는 수석 관리자의 코드, company_code는 작업 회사의 코드입니다.
+-- Employee : employee_code는 직원의 코드, manager_code는 관리자의 코드, senior_manager_code는 선임 관리자의 코드, lead_manager_code는 수석 관리자의 코드, company_code는 근무 회사의 코드입니다.
+https://www.hackerrank.com/challenges/the-company/problem?isFullScreen=true
             
                 
 
