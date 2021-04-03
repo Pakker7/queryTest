@@ -1,0 +1,58 @@
+-- 다음 두 가지 결과 집합을 생성합니다. 
+-- 1. OCCUPATIONS에있는 모든 이름의 알파벳 순서 목록을 쿼리하고 바로 뒤에 각 직업의 첫 글자가 괄호로 표시됩니다 (즉 : 괄호로 묶여 있음). 예 : AnActorName (A), ADoctorName (D), AProfessorName (P) 및 ASingerName (S)
+-- 2. OCCUPATIONS에서 각 직업의 발생 횟수를 쿼리합니다. 발생을 오름차순으로 정렬하고 다음 형식으로 출력합니다.
+-- There are a total of [occupation_count] [occupation]s.
+-- 여기서 [occupation_count]는 OCCUPATIONS에서 직업의 발생 횟수이고 [occupation]은 소문자 직업 이름입니다. 둘 이상의 Occupation에 동일한 [occupation_count]가있는 경우 알파벳순으로 정렬해야합니다.
+-- 참고 : 각 직업 유형에 대해 표에 최소한 두 개의 항목이 있습니다.
+-- sample output 
+--Ashely(P)
+--Christeen(P)
+--Jane(A)
+--Jenny(D)
+--Julia(A)
+--Ketty(P)
+--Maria(A)
+--Meera(S)
+--Priya(S)
+--Samantha(D)
+--There are a total of 2 doctors.
+--There are a total of 2 singers.
+--There are a total of 3 actors.
+--There are a total of 3 professors.
+
+select a.* from (
+    select concat(Name, '(',LEFT(Occupation,1), ')')
+    from OCCUPATIONS
+    order by 1
+    limit 1000000 
+) as a
+
+union all
+
+select b.* from (
+    select concat('There are a total of ', count(*), ' ', Occupation,'s.')
+    from OCCUPATIONS
+    group by Occupation
+    order by count(*), Occupation
+) as b
+
+이렇게 작성했는데 error가 났다.
+union all 기준으로 첫번째 쿼리에 order by가 인식이 안되서 limit 1000000 을 추가 했는데 그것 때문인가 하고 해석을 확인해보니 정확한 답은 얻을수가 없었다. 뭐지..
+
+
+-- 2D 평면에서 p1(a,b)와 p2(c,d) 두 점을 고려하십시오. 
+-- a는 북위도의 최소값 (STATION의 LAT_N)과 같습니다. 
+-- b는 서부 경도의 최소값 (STATION의 LONG_W)과 동일합니다. 
+-- c는 북위도의 최대 값 (STATION의 LAT_N)과 같습니다. 
+-- d는 서부 경도의 최대 값 (STATION의 LONG_W)과 같습니다. 
+-- p1와 p2포인트 사이의 맨해튼 거리를 쿼리하고 소수점 이하 자릿수로 반올림합니다.
+-- 여기서 LAT_N은 북위이고 LONG_W는 서경입니다.
+-- 거리 구하는 법 p1 at (x1, y1) and p2 at (x2, y2), it is |x1 - x2| + |y1 - y2|.
+
+select round(abs(min(LAT_N)-max(LAT_N)) + abs(min(LONG_W)-max(LONG_W)),4)
+from STATION
+
+
+                
+
+
