@@ -53,6 +53,18 @@ select round(abs(min(LAT_N)-max(LAT_N)) + abs(min(LONG_W)-max(LONG_W)),4)
 from STATION
 
 
+
+-- 북위도 (LAT_N) (a,b)의 최소값과 최대값이 각각 STATION에서 서부 경도 (LONG_W) (c,d)의 최소값과 최대 값 인 2D 평면의 두 점 p1(a,c) and p2(b,d)을 고려하십시오. 
+-- 점 사이의 유클리드 거리를 쿼리하고 답을 형식화하여 소수점 4자리를 표시합니다.
+-- a,b = min(LAT_N), max(LAT_N), min(LONG_W), max(LONG_W)
+SELECT
+    ROUND(SQRT(
+        POWER(MAX(LAT_N)  - MIN(LAT_N),  2)
+      + POWER(MAX(LONG_W) - MIN(LONG_W), 2)
+    ), 4)
+FROM 
+    STATION;
+            
                 
 
 
